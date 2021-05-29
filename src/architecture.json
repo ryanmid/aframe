@@ -1,0 +1,26 @@
+{
+  "connectors": {
+    "0": {
+      "name": "connector1",
+      "className": "DefaultConnector",
+      "connections": ["0"]
+    },
+    "1": {
+      "name": "connector2",
+      "className": "DefaultConnector",
+      "connections": ["1"]
+    }
+  },
+  "components": {
+    "0": {
+      "name": "Add One Component",
+      "className": "AddOneComponent",
+      "connections": ["1"]
+    },
+    "1": {
+      "name": "Print Component",
+      "className": "PrintComponent",
+      "connections": []
+    }
+  }
+}
