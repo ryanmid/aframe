@@ -122,10 +122,54 @@ class App(object):
         self.register_class('DefaultConnector', DefaultConnector)
 
     @staticmethod
-    def _load_json_file(filename: str):
+    def _load_json_file(filename: str) -> str:
         with open(filename, 'r') as json_file:
             json_data = json_file.read()
         return json_data
+
+    def _convert_json(self, json_data: str) -> str:
+        components = {}
+        connectors = {}
+        converted = {}
+
+        arch = json.loads(json_data)
+
+        for node in arch['nodes']:
+            converted_id = str(node['id'])
+            converted_type = node['type']
+            converted_node = {
+                'name': node['title'],
+                'className': node['title'],
+                'connections': []
+            }
+            if converted_type == 'arch/connector':
+                converted_node['bridges'] = []
+
+            if converted_type == 'arch/connector':
+                connectors[converted_id] = converted_node
+            else:
+                components[converted_id] = converted_node
+
+        for link in arch['links']:
+            link_id, src_id, src_port, dst_id, dst_port, src_type = link
+            src_id = str(src_id)
+            dst_id = str(dst_id)
+            dst_type = 'component' if dst_id in components else 'connector'
+
+            if src_type == 'component':
+                components[src_id]['connections'].append(dst_id)
+            else:
+                if dst_type == 'connector':
+                    connectors[src_id]['bridges'].append(dst_id)
+                else:
+                    connectors[src_id]['connections'].append(dst_id)
+
+        converted = {
+            'connectors': connectors,
+            'components': components
+        }
+
+        return json.dumps(converted)
 
     def register_classes(self, classes: List[Tuple[str, type]]):
         for entry in classes:
@@ -139,6 +183,7 @@ class App(object):
 
         if architecture_filename:
             architecture_json = self._load_json_file(architecture_filename)
+            architecture_json = self._convert_json(architecture_json)
 
         elif not architecture_json:
             architecture_json = '{}'

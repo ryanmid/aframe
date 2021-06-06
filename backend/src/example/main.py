@@ -11,7 +11,8 @@ class DemoApp(App):
         super().__init__()
 
     def run(self):
-        entry_connector = self.connectors["0"]['obj']
+        first_connector_id = list(self.connectors.keys())[0]
+        entry_connector = self.connectors[first_connector_id]['obj']
         asyncio.run(entry_connector.receive(Message(message_type='number', data=[12])))
 
 
@@ -22,7 +23,7 @@ if __name__ == '__main__':
             ('AddOneComponent', AddOneComponent),
             ('PrintComponent', PrintComponent)
         ])
-        app.compose(architecture_filename='./example/data/architecture.json')
+        app.compose(architecture_filename='./data/demo2.json')
         app.run()
 
     except Exception as e:
