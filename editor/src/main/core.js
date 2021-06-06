@@ -1,10 +1,11 @@
 const { app: ElectronApp, BrowserWindow, dialog, Menu, ipcMain } = require('electron');
 const path = require('path');
-const { writeFile } = require('fs');
+const { readFile, writeFile } = require('fs');
 
 class MainProcessCore {
     buildGUI() {
         this.mainWindow = this.createWindow('Architecture Editor', 800, 600);
+        this.mainWindow.maximize();
 
         this.mainMenu = this.createMainMenu();
         Menu.setApplicationMenu(this.mainMenu);
@@ -31,6 +32,14 @@ class MainProcessCore {
                 label: 'File',
                 submenu: [
                     {
+                        label: 'New Architecture',
+                        click: () => this.newArchitecture()
+                    },
+                    {
+                        label: 'Load Architecture',
+                        click: () => this.loadArchitecture()
+                    },
+                    {
                         label: 'Save Architecture',
                         click: () => this.saveArchitecture()
                     },
@@ -50,12 +59,35 @@ class MainProcessCore {
     createEventListeners() {
         ipcMain.on('save-architecture', (event, args) => {
             const { filePath, data } = args;
-            const json = JSON.stringify(data, null, 4);
+            const json = JSON.stringify(data, null, 2);
 
             writeFile(filePath, json, () => dialog.showMessageBox({
                 message: 'Save complete'
             }));
         });
+    }
+
+    newArchitecture() {
+        this.mainWindow.webContents.send('new-architecture', {});
+    }
+
+    loadArchitecture() {
+        const sendData = async (loadInfo) => {
+            if (loadInfo && !loadInfo['canceled']) {
+                const { filePaths } = loadInfo;
+                readFile(filePaths[0], 'utf-8', (err, data) => {
+                    const json = JSON.parse(data);
+                    this.mainWindow.webContents.send('load-architecture', { data: json });
+                });
+            }
+        };
+
+        dialog.showOpenDialog({
+            properties: [ "openFile", "dontAddToRecent" ],
+            filters: [
+                { name: 'json', extensions: ['json'] }
+            ]
+        }).then(sendData);
     }
 
     saveArchitecture() {
@@ -67,7 +99,7 @@ class MainProcessCore {
 
         dialog.showSaveDialog({
             filters: [
-                { name: 'json', 'extensions': ['json'] }
+                { name: 'json', extensions: ['json'] }
             ]
         }).then(getData);
     }
