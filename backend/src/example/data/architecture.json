@@ -3,12 +3,14 @@
     "0": {
       "name": "connector1",
       "className": "DefaultConnector",
-      "connections": ["0"]
+      "connections": ["0"],
+      "bridges": ["1"]
     },
     "1": {
       "name": "connector2",
       "className": "DefaultConnector",
-      "connections": ["1"]
+      "connections": ["1"],
+      "bridges": []
     }
   },
   "components": {
