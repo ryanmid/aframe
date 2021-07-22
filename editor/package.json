@@ -1,18 +1,21 @@
 {
-  "name": "aframe-editor",
-  "productName": "aframe-editor",
+  "name": "editor",
+  "productName": "editor",
   "version": "1.0.0",
   "description": "My Electron application description",
-  "main": "src/main/main.js",
+  "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\""
+    "lint": "eslint --ext .ts ."
   },
   "keywords": [],
-  "author": "",
+  "author": {
+    "name": "Ryan Middleton",
+    "email": "ryanmid@gmail.com"
+  },
   "license": "MIT",
   "config": {
     "forge": {
@@ -21,7 +24,7 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "aframe_editor"
+            "name": "editor"
           }
         },
         {
@@ -38,19 +41,59 @@
           "name": "@electron-forge/maker-rpm",
           "config": {}
         }
+      ],
+      "plugins": [
+        [
+          "@electron-forge/plugin-webpack",
+          {
+            "mainConfig": "./webpack.main.config.js",
+            "renderer": {
+              "config": "./webpack.renderer.config.js",
+              "entryPoints": [
+                {
+                  "html": "./src/resources/index.html",
+                  "js": "./src/render.ts",
+                  "name": "main_window"
+                },
+                {
+                  "html": "./src/resources/splash.html",
+                  "js": "./src/splash.ts",
+                  "name": "splash"
+                }
+              ]
+            }
+          }
+        ]
       ]
     }
   },
-  "dependencies": {
-    "electron-squirrel-startup": "^1.0.0",
-    "litegraph.js": "^0.7.9"
-  },
   "devDependencies": {
-    "@electron-forge/cli": "^6.0.0-beta.57",
-    "@electron-forge/maker-deb": "^6.0.0-beta.57",
-    "@electron-forge/maker-rpm": "^6.0.0-beta.57",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.57",
-    "@electron-forge/maker-zip": "^6.0.0-beta.57",
-    "electron": "13.1.1"
+    "@electron-forge/cli": "^6.0.0-beta.58",
+    "@electron-forge/maker-deb": "^6.0.0-beta.58",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.58",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.58",
+    "@electron-forge/maker-zip": "^6.0.0-beta.58",
+    "@electron-forge/plugin-webpack": "^6.0.0-beta.58",
+    "@types/react": "^17.0.14",
+    "@types/react-dom": "^17.0.9",
+    "@typescript-eslint/eslint-plugin": "^4.28.3",
+    "@typescript-eslint/parser": "^4.28.3",
+    "@vercel/webpack-asset-relocator-loader": "^1.6.0",
+    "css-loader": "^6.1.0",
+    "electron": "13.1.7",
+    "eslint": "^7.31.0",
+    "eslint-plugin-import": "^2.23.4",
+    "fork-ts-checker-webpack-plugin": "^6.2.12",
+    "node-loader": "^2.0.0",
+    "style-loader": "^3.1.0",
+    "ts-loader": "^9.2.3",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.12.1",
+    "electron-squirrel-startup": "^1.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-flow-renderer": "^9.6.4"
   }
 }

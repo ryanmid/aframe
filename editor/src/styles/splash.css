@@ -1,0 +1,53 @@
+html, body {
+    margin: 0px;
+    padding: 0px;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: rgb(125,125,125);
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wallpaper {
+    position: absolute;
+    left: -50%;
+    top: -50%;
+    width: 200%;
+    height: 200%;
+
+    background-image:
+            linear-gradient(black, 2px, transparent 1px),
+            linear-gradient(black, 1px, transparent 1px),
+            linear-gradient(90deg, black, 3px, transparent 1px),
+            linear-gradient(90deg, black, 1px, transparent 1px);
+
+    background-size: 100px 100px, 10px 10px, 100px 100px, 10px 10px;
+    animation: rotate 15s linear infinite, scale 15s linear infinite;
+}
+
+.message {
+    border-radius: 10px;
+    padding: 50px;
+    background-color: rgba(100, 100, 100, 0.8);
+    color: rgb(255, 255, 255);
+    z-index: 1;
+}
+
+@keyframes rotate {
+    0%   { transform: rotateZ(0deg); }
+    50%  { transform: rotateZ(180deg); }
+    100% { transform: rotateZ(360deg); }
+}
+
+@keyframes scale {
+    0%   { background-size: 100px 100px, 10px 10px, 100px 100px, 10px 10px; }
+    50%  { background-size: 200px 200px, 20px 20px, 200px 200px, 20px 20px; }
+    100% { background-size: 100px 100px, 10px 10px, 100px 100px, 10px 10px; }
+}
