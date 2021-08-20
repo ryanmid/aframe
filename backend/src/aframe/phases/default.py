@@ -10,12 +10,13 @@ class DefaultPhase(BasePhase):
 
     def run(self, journal: Journal):
         try:
-
             for task in self._tasks:
                 requirements = task.get_requirements()
                 provided = journal.get_available_tags()
                 if all(requirement in provided for requirement in requirements):
-                    task.run(journal)
+                    entries = task.run(journal)
+                    for entry in entries:
+                        journal.add_entry(entry)
 
         except UnmetRequirementException:
             import traceback

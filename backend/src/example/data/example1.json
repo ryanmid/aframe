@@ -3,11 +3,13 @@
     "tasks": {
         "1": {"type": "Runner"},
         "2": {"type": "Adder"},
-        "3": {"type": "Printer"}
+        "3": {"type": "Printer"},
+        "4": {"type": "Printer"},
+        "5": {"type": "Printer"}
     },
     "phases": {
         "1": {"name": "CLI Runner", "type": "DefaultPhase", "tasks": ["1"], "next": "2"},
         "2": {"name": "Value Adder", "type": "DefaultPhase", "tasks": ["2"], "next": "3"},
-        "3": {"name": "Results Printer", "type": "DefaultPhase", "tasks": ["3"], "next": null}
+        "3": {"name": "Results Printer", "type": "ThreadedPhase", "tasks": ["3", "4", "5"], "next": null}
     }
 }

@@ -3,6 +3,7 @@ from abc import abstractmethod
 
 from aframe.jobs.journal import Journal
 from aframe.tasks.base import BaseTask
+from jobs.journal_entry import JournalEntry
 
 
 class BasePhase(object):
