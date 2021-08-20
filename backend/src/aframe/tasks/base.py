@@ -2,7 +2,7 @@ from abc import abstractmethod
 from typing import List
 
 from aframe.exceptions.unmet_requirement import UnmetRequirementException
-from aframe.jobs.journal import Journal
+from aframe.jobs.journal import Journal, JournalEntry
 
 
 class BaseTask(object):
@@ -20,5 +20,5 @@ class BaseTask(object):
         return self.requires
 
     @abstractmethod
-    def run(self, journal: Journal):
+    def run(self, journal: Journal) -> List[JournalEntry]:
         pass

@@ -16,11 +16,11 @@ class Journal(object):
     def _get_uuid() -> str:
         return str(uuid4())
 
-    def get_workflow_id(self) -> int:
+    def get_workflow_id(self) -> str:
         return self._workflowId
 
-    def add_entry(self, tag: str, data: any) -> None:
-        self._entries[tag] = JournalEntry(tag, data)
+    def add_entry(self, entry: JournalEntry) -> None:
+        self._entries[entry.tag] = entry
 
     def is_provided(self, tag: str) -> bool:
         return tag in self._entries
