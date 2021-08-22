@@ -3,10 +3,10 @@ import React, {Fragment} from "react";
 
 const LargeGrid = () => (
     <Background
-        color={'rgb(0,0,0)'}
+        color={'rgb(125,125,125)'}
         variant={BackgroundVariant.Lines}
-        gap={100}
-        size={2}
+        gap={50}
+        size={1}
     />
 );
 
@@ -22,7 +22,7 @@ const SmallGrid = () => (
 const WorkspaceBackground = () => (
     <Fragment>
         <LargeGrid/>
-        <SmallGrid/>
+        {/*<SmallGrid/>*/}
     </Fragment>
 );
 

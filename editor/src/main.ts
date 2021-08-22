@@ -46,11 +46,9 @@ declare const SPLASH_WEBPACK_ENTRY: string;
 
         // Once the app window is ready then close the splash screen and show the app window
         appWindow.once('ready-to-show', () => {
-            setTimeout(() => {
-                splashWindow.destroy();
-                appWindow.maximize();
-                appWindow.show();
-            }, 5000);
+            splashWindow.destroy();
+            appWindow.maximize();
+            appWindow.show();
         });
 
         // Redraw the app window when it is resized

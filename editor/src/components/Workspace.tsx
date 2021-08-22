@@ -1,11 +1,13 @@
 import React, {useState} from "react";
 import ReactFlow, {addEdge, Background, BackgroundVariant, Controls, Edge, MiniMap, Node, removeElements} from "react-flow-renderer";
 import WorkspaceBackground from "./WorkspaceBackground";
+import {Phase} from "./Phase";
 import initialElements from "./initial_elements";
 import CSS from 'csstype';
+import {Task} from "./Task";
 
 const workspaceStyle: CSS.Properties = {
-  background: 'rgb(125,125,125)',
+  background: 'rgb(75,75,75)',
 };
 
 const onLoad = (reactFlowInstance: any) => {
@@ -13,6 +15,10 @@ const onLoad = (reactFlowInstance: any) => {
     reactFlowInstance.fitView();
 };
 
+const nodeTypes = {
+    phase: Phase,
+    task: Task
+}
 
 const Workspace = () => {
     const [elements, setElements] = useState(initialElements);
@@ -27,21 +33,15 @@ const Workspace = () => {
             onConnect={onConnect}
             onLoad={onLoad}
             style={workspaceStyle}
+            nodeTypes={nodeTypes}
         >
             <WorkspaceBackground/>
             <MiniMap
                 nodeStrokeColor={(n: Node): string => {
-                    if (n.style?.background) return n.style.background as string;
-                    if (n.type === 'input') return '#0041d0';
-                    if (n.type === 'output') return '#ff0072';
-                    if (n.type === 'default') return '#1a192b';
-
-                    return '#eee';
+                    return '#000';
                 }}
                 nodeColor={(n): string => {
-                    if (n.style?.background) return n.style.background as string;
-
-                    return '#fff';
+                    return '#0000ff50';
                 }}
                 nodeBorderRadius={2}
             />
