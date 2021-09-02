@@ -1,15 +1,13 @@
 from typing import List
-from aframe.jobs.journal import Journal, JournalEntry
-from aframe.tasks.base import BaseTask
+from journal import Journal, JournalEntry
+from task import task
 
 
-class Runner(BaseTask):
+@task(requirements=[])
+def runner(journal: Journal) -> List[JournalEntry]:
+    """A task that always runs and returns new 'x' and 'y' journal entries with values 10 and 20 respectively."""
 
-    def __init__(self):
-        super().__init__('runner', requires=[])
-
-    def run(self, journal: Journal) -> List[JournalEntry]:
-        return [
-            JournalEntry(tag='x', data=10),
-            JournalEntry(tag='y', data=20)
-        ]
+    return [
+        JournalEntry(tag='x', data=10),
+        JournalEntry(tag='y', data=20)
+    ]

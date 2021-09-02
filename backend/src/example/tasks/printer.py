@@ -1,23 +1,20 @@
-from random import random
 from typing import List
-from aframe.jobs.journal import Journal, JournalEntry
-from aframe.tasks.base import BaseTask
-import time
+from journal import Journal, JournalEntry
+from task import task
 
-class Printer(BaseTask):
 
-    def __init__(self):
-        super().__init__('printer', requires=[])
+def _print_entry(entry: JournalEntry):
+    print(f'{entry.timestamp}: [{entry.tag}] {entry.data}')
 
-    @staticmethod
-    def _print_entry(entry: JournalEntry):
-        print(f'{entry.timestamp}: [{entry.tag}] {entry.data}')
 
-    def run(self, journal: Journal) -> List[JournalEntry]:
-        print(f'Workflow ID: {journal.get_workflow_id()}')
+@task(requirements=[])
+def printer(journal: Journal) -> List[JournalEntry]:
+    """A task that prints all of the journal entries in the workflow journal."""
 
-        entries = journal.get_entries()
-        output = [f'{entry.timestamp}: [{entry.tag}] {entry.data}' for entry in entries]
-        print('\n'.join(output))
+    print(f'Workflow ID: {journal.get_workflow_id()}')
 
-        return []
+    entries = journal.get_entries()
+    output = [f'{entry.timestamp}: [{entry.tag}] {entry.data}' for entry in entries]
+    print('\n'.join(output))
+
+    return []
