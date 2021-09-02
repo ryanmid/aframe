@@ -1,3 +1,3 @@
-from .adder import Adder
-from .printer import Printer
-from .runner import Runner
+from .adder import adder
+from .printer import printer
+from .runner import runner

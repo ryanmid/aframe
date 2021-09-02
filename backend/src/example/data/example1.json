@@ -1,15 +1,15 @@
 {
     "start_phase": "1",
     "tasks": {
-        "1": {"type": "Runner"},
-        "2": {"type": "Adder"},
-        "3": {"type": "Printer"},
-        "4": {"type": "Printer"},
-        "5": {"type": "Printer"}
+        "1": {"type": "runner"},
+        "2": {"type": "adder"},
+        "3": {"type": "printer"},
+        "4": {"type": "printer"},
+        "5": {"type": "printer"}
     },
     "phases": {
-        "1": {"name": "CLI Runner", "type": "DefaultPhase", "tasks": ["1"], "next": "2"},
-        "2": {"name": "Value Adder", "type": "DefaultPhase", "tasks": ["2"], "next": "3"},
+        "1": {"name": "CLI Runner", "type": "SequentialPhase", "tasks": ["1"], "next": "2"},
+        "2": {"name": "Value Adder", "type": "SequentialPhase", "tasks": ["2"], "next": "3"},
         "3": {"name": "Results Printer", "type": "ThreadedPhase", "tasks": ["3", "4", "5"], "next": null}
     }
 }
